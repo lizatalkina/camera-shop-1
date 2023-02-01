@@ -10,11 +10,13 @@ import { useAppSelector } from '../../hooks';
 
 function CatalogScreen (): JSX.Element {
   const cameras = useAppSelector((state) => state.cameras);
+  const promo = useAppSelector((state) => state.promo);
+
   return (
     <>
       <Header/>
       <main>
-        <PromoBanner/>
+        <PromoBanner promo = {promo}/>
         <div className="page-content">
           <Breadcrumbs/>
           <section className="catalog">
