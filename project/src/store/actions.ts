@@ -14,3 +14,8 @@ export const getPromo = createAction<{
   promo: Promo;
 }
 >('camera/getPromo');
+
+export const changeCurrentPage = createAction<{
+  currentPage: number;
+}
+>('camera/changeCurrentPage');

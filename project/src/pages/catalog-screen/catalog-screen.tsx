@@ -7,10 +7,14 @@ import Sorting from '../../components/sorting/sorting';
 import ProductCardsList from '../../components/product-cards-list/product-cards-list';
 import Pagination from '../../components/pagination/pagination';
 import { useAppSelector } from '../../hooks';
+import { PAGE_SIZE } from '../../const';
 
 function CatalogScreen (): JSX.Element {
   const cameras = useAppSelector((state) => state.cameras);
   const promo = useAppSelector((state) => state.promo);
+  const currentPage = useAppSelector((state) => state.currentPage);
+  const pageCount = Math.ceil(cameras.length / PAGE_SIZE);
+  const currentCameras = cameras.slice((currentPage - 1) * PAGE_SIZE, (currentPage - 1) * PAGE_SIZE + PAGE_SIZE);
 
   return (
     <>
@@ -28,8 +32,8 @@ function CatalogScreen (): JSX.Element {
                 </div>
                 <div className="catalog__content">
                   <Sorting/>
-                  <ProductCardsList cameras = { cameras }/>
-                  <Pagination/>
+                  <ProductCardsList cameras = { currentCameras }/>
+                  <Pagination currentPage = {currentPage} pageCount = {pageCount}/>
                 </div>
               </div>
             </div>

@@ -10,9 +10,11 @@ function App(): JSX.Element {
       <Routes>
         <Route
           path = { AppRoute.Catalog }
-          element = {
-            <CatalogScreen/>
-          }
+          element = {<CatalogScreen/>}
+        />
+        <Route
+          path = { AppRoute.CatalogPage }
+          element = {<CatalogScreen/>}
         />
         <Route
           path= { AppRoute.Product }
