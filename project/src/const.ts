@@ -11,3 +11,5 @@ export enum APIRoute {
 }
 
 export const PAGE_SIZE = 9;
+
+export const STARS_COUNT = 5;

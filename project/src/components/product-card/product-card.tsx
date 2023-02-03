@@ -2,8 +2,7 @@ import React from 'react';
 import { Camera } from '../../types/camera';
 import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
-
-const STARS_COUNT = 5;
+import { STARS_COUNT } from '../../const';
 
 type CameraProps = {
   camera: Camera;

@@ -19,3 +19,8 @@ export const changeCurrentPage = createAction<{
   currentPage: number;
 }
 >('camera/changeCurrentPage');
+
+export const getCamera = createAction<{
+  camera: Camera;
+}
+>('camera/getCamera');

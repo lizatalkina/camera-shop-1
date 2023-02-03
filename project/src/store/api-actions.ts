@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { Camera } from '../types/camera';
 import { Promo } from '../types/promo';
-import { getCameras, getPromo } from './actions';
+import { getCameras, getPromo, getCamera } from './actions';
 import { APIRoute } from '../const';
 
 export const fetchCamerasAction = createAsyncThunk<void, undefined, {
@@ -30,6 +30,20 @@ export const fetchPromoAction = createAsyncThunk<void, undefined, {
     const {data} = await api.get<Promo>(APIRoute.Promo);
     dispatch(getPromo({
       promo: data
+    }));
+  },
+);
+
+export const fetchCameraAction = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchCamera',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<Camera>(`${APIRoute.Cameras}/${id}`);
+    dispatch(getCamera({
+      camera: data
     }));
   },
 );

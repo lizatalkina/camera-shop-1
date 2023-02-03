@@ -1,64 +1,58 @@
+import React from 'react';
+import { STARS_COUNT } from '../../const';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
+import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchCameraAction } from '../../store/api-actions';
+import { useEffect } from 'react';
+import CatalogScreen from '../catalog-screen/catalog-screen';
 
 function ProductScreen (): JSX.Element {
-  return (
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const camera = useAppSelector((state) => state.camera);
+
+  useEffect(() => {
+    dispatch(fetchCameraAction(String(id)));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  return camera ? (
     <>
       <Header/>
       <main>
         <div className="page-content">
-          <div className="breadcrumbs">
-            <div className="container">
-              <ul className="breadcrumbs__list">
-                <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link" href="index.html">Главная
-                    <svg width="5" height="8" aria-hidden="true">
-                      <use xlinkHref="#icon-arrow-mini"></use>
-                    </svg>
-                  </a>
-                </li>
-                <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link" href="catalog.html">Каталог
-                    <svg width="5" height="8" aria-hidden="true">
-                      <use xlinkHref="#icon-arrow-mini"></use>
-                    </svg>
-                  </a>
-                </li>
-                <li className="breadcrumbs__item"><span className="breadcrumbs__link breadcrumbs__link--active">Ретрокамера «Das Auge IV»</span>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <Breadcrumbs/>
           <div className="page-content__section">
             <section className="product">
               <div className="container">
                 <div className="product__img">
                   <picture>
-                    <source type="image/webp" srcSet="img/content/img1.webp, img/content/img1@2x.webp 2x"/><img src="img/content/img1.jpg" srcSet="img/content/img1@2x.jpg 2x" width="560" height="480" alt="Ретрокамера Das Auge IV"/>
+                    <source type="image/webp" srcSet={`${camera.previewImgWebp}, ${camera.previewImgWebp2x}`}/>
+                    <img src="img/content/img1.jpg" srcSet={camera.previewImg2x} width="560" height="480" alt={camera.name}/>
                   </picture>
                 </div>
                 <div className="product__content">
-                  <h1 className="title title--h3">Ретрокамера «Das Auge IV»</h1>
+                  <h1 className="title title--h3">{camera.name}</h1>
                   <div className="rate product__rate">
-                    <svg width="17" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-full-star"></use>
-                    </svg>
-                    <svg width="17" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-full-star"></use>
-                    </svg>
-                    <svg width="17" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-full-star"></use>
-                    </svg>
-                    <svg width="17" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-full-star"></use>
-                    </svg>
-                    <svg width="17" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                    <p className="visually-hidden">Рейтинг: 4</p>
-                    <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>12</p>
+                    {Array.from({length: STARS_COUNT}, (_, i) => i + 1).map((e, _) =>
+                      (
+                        <React.Fragment key={e}>
+                          <svg width="17" height="16" aria-hidden="true">
+                            {
+                              e <= camera.rating ? (<use xlinkHref="#icon-full-star"></use>) : (<use xlinkHref="#icon-star"></use>)
+                            }
+                          </svg>
+                        </React.Fragment>))}
+                    <p className="visually-hidden">Рейтинг: {camera.rating}</p>
+                    <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{camera.reviewCount}</p>
                   </div>
-                  <p className="product__price"><span className="visually-hidden">Цена:</span>73 450 ₽</p>
+                  <p className="product__price"><span className="visually-hidden">Цена:</span>{new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', minimumFractionDigits: 0 }).format(camera.price)}</p>
                   <button className="btn btn--purple" type="button">
                     <svg width="24" height="16" aria-hidden="true">
                       <use xlinkHref="#icon-add-basket"></use>
@@ -471,7 +465,7 @@ function ProductScreen (): JSX.Element {
       </a>
       <Footer/>
     </>
-  );
+  ) : <CatalogScreen/>;
 }
 
 export default ProductScreen;
