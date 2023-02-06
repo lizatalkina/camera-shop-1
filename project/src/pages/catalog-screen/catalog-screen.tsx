@@ -22,7 +22,7 @@ function CatalogScreen (): JSX.Element {
       <main>
         <PromoBanner promo = {promo}/>
         <div className="page-content">
-          <Breadcrumbs/>
+          <Breadcrumbs name = {null}/>
           <section className="catalog">
             <div className="container">
               <h1 className="title title--h2">Каталог фото- и видеотехники</h1>

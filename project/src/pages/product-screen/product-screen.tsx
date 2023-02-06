@@ -27,7 +27,7 @@ function ProductScreen (): JSX.Element {
       <Header/>
       <main>
         <div className="page-content">
-          <Breadcrumbs/>
+          <Breadcrumbs name = {camera.name}/>
           <div className="page-content__section">
             <section className="product">
               <div className="container">
