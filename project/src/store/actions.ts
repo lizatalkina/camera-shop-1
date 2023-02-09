@@ -2,6 +2,7 @@ import {createAction} from '@reduxjs/toolkit';
 import { AppRoute } from '../const';
 import { Camera } from '../types/camera';
 import { Promo } from '../types/promo';
+import { Review } from '../types/review';
 
 export const getCameras = createAction<{
   cameras: Camera[];
@@ -34,3 +35,8 @@ export const changeCurrentSliderPage = createAction<{
   currentSliderPage: number;
 }
 >('camera/changeCurrentSliderPage');
+
+export const getReviews = createAction<{
+  reviews: Review[];
+}
+>('camera/getReviews');
