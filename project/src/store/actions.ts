@@ -31,11 +31,6 @@ export const getSimilarCameras = createAction<{
 }
 >('camera/getSimilarCameras');
 
-export const changeCurrentSliderPage = createAction<{
-  currentSliderPage: number;
-}
->('camera/changeCurrentSliderPage');
-
 export const getReviews = createAction<{
   reviews: Review[];
 }

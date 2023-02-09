@@ -2,7 +2,7 @@ import {createReducer} from '@reduxjs/toolkit';
 import { Camera } from '../types/camera';
 import { Promo } from '../types/promo';
 import { Review } from '../types/review';
-import { getCameras, getPromo, changeCurrentPage, getCamera, getSimilarCameras, changeCurrentSliderPage, getReviews } from './actions';
+import { getCameras, getPromo, changeCurrentPage, getCamera, getSimilarCameras, getReviews } from './actions';
 
 type InitialState = {
   cameras: Camera[];
@@ -10,7 +10,6 @@ type InitialState = {
   currentPage: number;
   camera: Camera | null;
   similarCameras: Camera[];
-  currentSliderPage: number;
   reviews: Review[];
 }
 
@@ -20,7 +19,6 @@ const initialState: InitialState = {
   currentPage: 1,
   camera: null,
   similarCameras: [],
-  currentSliderPage: 1,
   reviews: [],
 };
 
@@ -45,10 +43,6 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(getSimilarCameras, (state, action) => {
       const { similarCameras } = action.payload;
       state.similarCameras = similarCameras;
-    })
-    .addCase(changeCurrentSliderPage, (state, action) => {
-      const { currentSliderPage } = action.payload;
-      state.currentSliderPage = currentSliderPage;
     })
     .addCase(getReviews, (state, action) => {
       const { reviews } = action.payload;

@@ -9,14 +9,16 @@ type SliderProps = {
 
 const SIMILAR_CARDS_SIZE = 3;
 
+
 function SimilarCardsSlider ({similarCameras}: SliderProps ): JSX.Element {
   const sliderPageCount = Math.ceil(similarCameras.length / SIMILAR_CARDS_SIZE);
-  const [currentSliderPage, setCurrentSliderPage] = useState(2);
+  const [currentSliderPage, setCurrentSliderPage] = useState(1);
+
+  const handleChangePrev = () => {
+    setCurrentSliderPage(currentSliderPage - 1);
+  };
 
   const handleChangeNext = () => {
-    // для теста вызова функции
-    // eslint-disable-next-line no-console
-    console.log('handleChangeNext');
     setCurrentSliderPage(currentSliderPage + 1);
   };
 
@@ -31,14 +33,14 @@ function SimilarCardsSlider ({similarCameras}: SliderProps ): JSX.Element {
           ))
         }
       </div>
-      <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" disabled = {currentSliderPage === 1}
-        onClick={() => setCurrentSliderPage(currentSliderPage - 1)}
+      <button style={{ pointerEvents: 'auto' }} className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" disabled = {currentSliderPage === 1}
+        onClick={handleChangePrev}
       >
         <svg width="7" height="12" aria-hidden="true">
           <use xlinkHref="#icon-arrow"></use>
         </svg>
       </button>
-      <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" disabled = {currentSliderPage === sliderPageCount}
+      <button style={{ pointerEvents: 'auto' }} className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" disabled = {currentSliderPage === sliderPageCount}
         onClick={handleChangeNext}
       >
         <svg width="7" height="12" aria-hidden="true">
