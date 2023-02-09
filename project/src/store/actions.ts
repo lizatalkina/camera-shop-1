@@ -21,6 +21,16 @@ export const changeCurrentPage = createAction<{
 >('camera/changeCurrentPage');
 
 export const getCamera = createAction<{
-  camera: Camera;
+  camera: Camera | null;
 }
 >('camera/getCamera');
+
+export const getSimilarCameras = createAction<{
+  similarCameras: Camera[];
+}
+>('camera/getSimilarCameras');
+
+export const changeCurrentSliderPage = createAction<{
+  currentSliderPage: number;
+}
+>('camera/changeCurrentSliderPage');

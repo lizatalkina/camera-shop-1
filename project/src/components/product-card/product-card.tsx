@@ -10,6 +10,7 @@ type CameraProps = {
 
 function ProductCard ( { camera }: CameraProps): JSX.Element {
   const {id, name, previewImgWebp, previewImgWebp2x, previewImg, previewImg2x, price, rating, reviewCount } = camera;
+
   return (
     <>
       <div className="product-card__img">

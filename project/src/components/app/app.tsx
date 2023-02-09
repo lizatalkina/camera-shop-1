@@ -17,7 +17,7 @@ function App(): JSX.Element {
           element = {<CatalogScreen/>}
         />
         <Route
-          path= { AppRoute.Product }
+          path = { AppRoute.Product }
           element = {
             <ProductScreen/>
           }

@@ -8,6 +8,7 @@ export enum AppRoute {
 export enum APIRoute {
   Cameras = '/cameras',
   Promo = '/promo',
+  SimilarCameras = '/cameras/:id/similar',
 }
 
 export const PAGE_SIZE = 9;
