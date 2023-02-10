@@ -13,7 +13,10 @@ function Pagination ({ currentPage, pageCount}: PaginationProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }, [currentPage]);
 
   return (
