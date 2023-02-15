@@ -11,6 +11,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { getCamera, getSimilarCameras, getReviews} from '../../store/actions';
 import SimilarCardsSlider from '../../components/similar-cards-slider/similar-cards-slider';
 import ReviewCardList from '../../components/review-card-list/review-card-list';
+import AddReview from '../../components/add-review/add-review';
 
 function ProductScreen (): JSX.Element {
   const { id } = useParams();
@@ -20,10 +21,27 @@ function ProductScreen (): JSX.Element {
   const similarCameras = useAppSelector((state) => state.similarCameras);
   const [specifications, setSpecifications] = useState(false);
   const [information, setInformation] = useState(true);
+  const [modalAddReviewIsOpen, setModalAddReviewIsOpen] = useState(false);
+
+  const scrollToTop = () =>{
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   const handleClick = () => {
     setInformation(!information);
     setSpecifications(!specifications);
+  };
+
+  const openAddReviewFromParent = () => {
+    setModalAddReviewIsOpen(true);
+    scrollToTop();
+  };
+
+  const handleCloseAddReviewModal = () => {
+    setModalAddReviewIsOpen(false);
   };
 
   useEffect(() => {
@@ -36,13 +54,6 @@ function ProductScreen (): JSX.Element {
       dispatch(getReviews({reviews: []}));
     };
   }, [dispatch, id]);
-
-  const scrollToTop = () =>{
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
 
   return camera ? (
     <>
@@ -107,7 +118,21 @@ function ProductScreen (): JSX.Element {
           </div>
           <div className="page-content__section">
             <section className="review-block">
-              <ReviewCardList reviews = { reviews }/>
+              <div className="container">
+                <div className="page-content__headed">
+                  <h2 className="title title--h3">Отзывы</h2>
+                  <button className="btn" type="button"
+                    onClick = { openAddReviewFromParent }
+                  >Оставить свой отзыв
+                  </button>
+                  <AddReview
+                    isModalOpened = { modalAddReviewIsOpen }
+                    onCloseModal = { handleCloseAddReviewModal }
+                    cameraId = { camera.id}
+                  />
+                </div>
+                <ReviewCardList reviews = { reviews }/>
+              </div>
             </section>
           </div>
         </div>

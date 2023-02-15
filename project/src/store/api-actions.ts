@@ -76,3 +76,25 @@ export const fetchReviewsAction = createAsyncThunk<void, string, {
     }));
   },
 );
+
+export const postReview = createAsyncThunk<void, Review, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/postReview',
+  async({ cameraId, userName, advantage, disadvantage, review, rating }, { dispatch, extra: api }) => {
+    await api.post<Review>(APIRoute.SendReview, {
+      cameraId,
+      userName,
+      advantage,
+      disadvantage,
+      review,
+      rating
+    });
+    const {data} = await api.get<Review[]>(APIRoute.Reviews.replace(':id', `${cameraId}`));
+    dispatch(getReviews({
+      reviews: data
+    }));
+  }
+);

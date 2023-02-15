@@ -10,7 +10,7 @@ type ReviewsListProps = {
 function ReviewCardList ({ reviews }: ReviewsListProps): JSX.Element {
   const [countOfVisibleReviews, setCountOfVisibleReviews] = useState(REVIEWS_MAX_COUNT);
   const reviewsToShow = reviews.map((review) => ({ ...review,
-    dateTyped: new Date(review.createAt),
+    dateTyped: new Date(String(review.createAt)),
   })).sort((a, b) =>
     b.dateTyped.valueOf() - a.dateTyped.valueOf()
   ).slice(0, countOfVisibleReviews);
@@ -20,11 +20,7 @@ function ReviewCardList ({ reviews }: ReviewsListProps): JSX.Element {
   };
 
   return (
-    <div className="container">
-      <div className="page-content__headed">
-        <h2 className="title title--h3">Отзывы</h2>
-        <button className="btn" type="button">Оставить свой отзыв</button>
-      </div>
+    <>
       <ul className="review-block__list">
         {
           reviewsToShow.map((reviewToShow) => (
@@ -44,7 +40,7 @@ function ReviewCardList ({ reviews }: ReviewsListProps): JSX.Element {
           </div>
         ) : ''
       }
-    </div>
+    </>
   );
 }
 

@@ -6,8 +6,8 @@ type ReviewProps = {
   reviewItem: Review;
 }
 
-function formatDate(date: Date): string {
-  return String(date.toLocaleString('ru-ru', { day: 'numeric', month: 'long', year: undefined }));
+function formatDate(date: Date | undefined): string {
+  return date ? String(date.toLocaleString('ru-ru', { day: 'numeric', month: 'long', year: undefined })) : '';
 }
 
 function ReviewCard ({ reviewItem }: ReviewProps): JSX.Element {
