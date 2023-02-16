@@ -1,6 +1,6 @@
 import Modal from 'react-modal';
 import { useAppDispatch } from '../../hooks';
-import React, { ChangeEvent, MouseEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { postReview } from '../../store/api-actions';
 import { USER_REVIEW } from '../../const';
 
@@ -22,6 +22,17 @@ function AddReview ({isModalOpened, onCloseModal, cameraId}: AddReviewProps): JS
     rating: 0,
   });
 
+  const [validation, setValidation] = useState({
+    isUserNameValid: false,
+    isAdvantageValid: false,
+    isDisadvantageValid: false,
+    isReviewValid: false,
+    isRatingValid: false,
+  });
+
+  const [isFormValid, setFormValid] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+
   const dataChangeHandle = (
     evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -29,26 +40,57 @@ function AddReview ({isModalOpened, onCloseModal, cameraId}: AddReviewProps): JS
     setUserReview({ ...userReview, [USER_REVIEW[name]]: value });
   };
 
-  const handlePostReview = (evt: MouseEvent<HTMLElement>) => {
+  const handlePostReview = (evt: FormEvent<HTMLElement>) => {
     evt.preventDefault();
-    const { userName, advantage, disadvantage, review, rating } = userReview;
-    dispatch(postReview({
-      cameraId: cameraId,
-      userName: userName,
-      advantage: advantage,
-      disadvantage: disadvantage,
-      review: review,
-      rating: Number(rating)}
-    ));
-    setUserReview({
-      userName: '',
-      advantage: '',
-      disadvantage: '',
-      review: '',
-      rating: 0,
-    });
-    onCloseModal();
+    setIsSending(true);
+    if (isFormValid) {
+      const { userName, advantage, disadvantage, review, rating } = userReview;
+      dispatch(postReview({
+        cameraId: cameraId,
+        userName: userName,
+        advantage: advantage,
+        disadvantage: disadvantage,
+        review: review,
+        rating: Number(rating)}
+      ));
+      setUserReview({
+        userName: '',
+        advantage: '',
+        disadvantage: '',
+        review: '',
+        rating: 0,
+      });
+      setIsSending(false);
+      onCloseModal();
+    }
   };
+
+  useEffect(() => {
+    const checkValidation = () => {
+      setValidation({
+        isUserNameValid: userReview.userName.length > 0,
+        isAdvantageValid: userReview.advantage.length > 0,
+        isDisadvantageValid: userReview.disadvantage.length > 0,
+        isReviewValid: userReview.review.length >= 5,
+        isRatingValid: Number(userReview.rating) > 0,
+      });
+    };
+    checkValidation();
+  },[userReview]);
+
+  useEffect(() => {
+    const checkAllFieldsValid = () => {
+      for (const value of Object.values(validation)) {
+        if (!value) {
+          setFormValid(false);
+          return false;
+        }
+      }
+      setFormValid(true);
+      return true;
+    };
+    checkAllFieldsValid();
+  },[validation]);
 
   return (
     <Modal
@@ -69,14 +111,11 @@ function AddReview ({isModalOpened, onCloseModal, cameraId}: AddReviewProps): JS
           <div className="modal__content">
             <p className="title title--h4">Оставить отзыв</p>
             <div className="form-review">
-              <form method="post">
-                {/* //disabled = { isSending }
-                onSubmit= {(evt) => {
-                  handlePostReview(evt);
-                }}
-              > */}
+              <form method="post"
+                onSubmit = { handlePostReview }
+              >
                 <div className="form-review__rate">
-                  <fieldset className="rate form-review__item">
+                  <fieldset className={ !(!validation.isRatingValid && isSending) ? 'rate form-review__item' : 'rate form-review__item is-invalid'}>
                     <legend className="rate__caption">Рейтинг
                       <svg width="9" height="9" aria-hidden="true">
                         <use xlinkHref="#icon-snowflake"></use>
@@ -100,56 +139,56 @@ function AddReview ({isModalOpened, onCloseModal, cameraId}: AddReviewProps): JS
                     </div>
                     <p className="rate__message">Нужно оценить товар</p>
                   </fieldset>
-                  <div className="custom-input form-review__item">
+                  <div className={!(!validation.isUserNameValid && isSending) ? 'custom-input form-review__item' : 'custom-input form-review__item is-invalid'}>
                     <label>
                       <span className="custom-input__label">Ваше имя
                         <svg width="9" height="9" aria-hidden="true">
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <input type="text" name="user-name" placeholder="Введите ваше имя" required
+                      <input type="text" name="user-name" placeholder="Введите ваше имя"
                         onChange = { dataChangeHandle }
                         value = { userReview.userName }
                       />
                     </label>
                     <p className="custom-input__error">Нужно указать имя</p>
                   </div>
-                  <div className="custom-input form-review__item">
+                  <div className={!(!validation.isAdvantageValid && isSending) ? 'custom-input form-review__item' : 'custom-input form-review__item is-invalid'}>
                     <label>
                       <span className="custom-input__label">Достоинства
                         <svg width="9" height="9" aria-hidden="true">
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <input type="text" name="user-plus" placeholder="Основные преимущества товара" required
+                      <input type="text" name="user-plus" placeholder="Основные преимущества товара"
                         onChange = { dataChangeHandle }
                         value = { userReview.advantage }
                       />
                     </label>
                     <p className="custom-input__error">Нужно указать достоинства</p>
                   </div>
-                  <div className="custom-input form-review__item">
+                  <div className={!(!validation.isDisadvantageValid && isSending) ? 'custom-input form-review__item' : 'custom-input form-review__item is-invalid'}>
                     <label>
                       <span className="custom-input__label">Недостатки
                         <svg width="9" height="9" aria-hidden="true">
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <input type="text" name="user-minus" placeholder="Главные недостатки товара" required
+                      <input type="text" name="user-minus" placeholder="Главные недостатки товара"
                         onChange = { dataChangeHandle }
                         value = { userReview.disadvantage }
                       />
                     </label>
                     <p className="custom-input__error">Нужно указать недостатки</p>
                   </div>
-                  <div className="custom-textarea form-review__item">
+                  <div className={!(!validation.isReviewValid && isSending) ? 'custom-textarea form-review__item' : 'custom-textarea form-review__item is-invalid'}>
                     <label>
                       <span className="custom-textarea__label">Комментарий
                         <svg width="9" height="9" aria-hidden="true">
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <textarea name="user-comment" minLength={5} placeholder="Поделитесь своим опытом покупки"
+                      <textarea name="user-comment" placeholder="Поделитесь своим опытом покупки"
                         onChange = { dataChangeHandle }
                         value = { userReview.review }
                       >
@@ -158,11 +197,7 @@ function AddReview ({isModalOpened, onCloseModal, cameraId}: AddReviewProps): JS
                     <div className="custom-textarea__error">Нужно добавить комментарий</div>
                   </div>
                 </div>
-                <button className="btn btn--purple form-review__btn" type="submit"
-                  onClick = {(evt) => {
-                    handlePostReview(evt);
-                  }}
-                >
+                <button className="btn btn--purple form-review__btn" type="submit">
                 Отправить отзыв
                 </button>
               </form>
