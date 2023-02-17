@@ -10,9 +10,10 @@ type AddReviewProps = {
   isModalOpened: boolean;
   onCloseModal: () => void;
   cameraId: number;
+  openSuccessPostModal: () => void;
 };
 
-function AddReview ({isModalOpened, onCloseModal, cameraId}: AddReviewProps): JSX.Element {
+function AddReview ({isModalOpened, onCloseModal, cameraId, openSuccessPostModal}: AddReviewProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [userReview, setUserReview] = useState({
     userName: '',
@@ -40,6 +41,11 @@ function AddReview ({isModalOpened, onCloseModal, cameraId}: AddReviewProps): JS
     setUserReview({ ...userReview, [USER_REVIEW[name]]: value });
   };
 
+  const handleSuccessPostReview = () => {
+    onCloseModal();
+    openSuccessPostModal();
+  };
+
   const handlePostReview = (evt: FormEvent<HTMLElement>) => {
     evt.preventDefault();
     setIsSending(true);
@@ -61,7 +67,7 @@ function AddReview ({isModalOpened, onCloseModal, cameraId}: AddReviewProps): JS
         rating: 0,
       });
       setIsSending(false);
-      onCloseModal();
+      handleSuccessPostReview();
     }
   };
 

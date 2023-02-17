@@ -12,6 +12,7 @@ import { getCamera, getSimilarCameras, getReviews} from '../../store/actions';
 import SimilarCardsSlider from '../../components/similar-cards-slider/similar-cards-slider';
 import ReviewCardList from '../../components/review-card-list/review-card-list';
 import AddReview from '../../components/add-review/add-review';
+import ProductReviewSuccess from '../../components/product-review-success/product-review-success';
 
 function ProductScreen (): JSX.Element {
   const { id } = useParams();
@@ -22,6 +23,7 @@ function ProductScreen (): JSX.Element {
   const [specifications, setSpecifications] = useState(false);
   const [information, setInformation] = useState(true);
   const [modalAddReviewIsOpen, setModalAddReviewIsOpen] = useState(false);
+  const [modalSuccessPostReviewIsOpen, setModalSuccessPostReviewIsOpen] = useState(false);
 
   const scrollToTop = () =>{
     window.scrollTo({
@@ -38,6 +40,14 @@ function ProductScreen (): JSX.Element {
   const openAddReviewFromParent = () => {
     setModalAddReviewIsOpen(true);
     scrollToTop();
+  };
+
+  const handleCloseSuccessPostReviewModal = () => {
+    setModalSuccessPostReviewIsOpen(false);
+  };
+
+  const handleOpenSuccessPostReviewModal = () => {
+    setModalSuccessPostReviewIsOpen(true);
   };
 
   const handleCloseAddReviewModal = () => {
@@ -128,6 +138,12 @@ function ProductScreen (): JSX.Element {
                   <AddReview
                     isModalOpened = { modalAddReviewIsOpen }
                     onCloseModal = { handleCloseAddReviewModal }
+                    cameraId = { camera.id}
+                    openSuccessPostModal = { handleOpenSuccessPostReviewModal }
+                  />
+                  <ProductReviewSuccess
+                    isModalOpened = { modalSuccessPostReviewIsOpen }
+                    onCloseModal = { handleCloseSuccessPostReviewModal }
                     cameraId = { camera.id}
                   />
                 </div>
