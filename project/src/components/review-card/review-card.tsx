@@ -1,6 +1,6 @@
 import React from 'react';
 import { Review } from '../../types/review';
-import { STARS_COUNT } from '../../const';
+import StarsRate from '../stars-rate/stars-rate';
 
 type ReviewProps = {
   reviewItem: Review;
@@ -20,16 +20,7 @@ function ReviewCard ({ reviewItem }: ReviewProps): JSX.Element {
         <time className="review-card__data">{formatedDate}</time>
       </div>
       <div className="rate review-card__rate">
-        {Array.from({length: STARS_COUNT}, (_, i) => i + 1).map((e, _) =>
-          (
-            <React.Fragment key={e}>
-              <svg width="17" height="16" aria-hidden="true">
-                {
-                  e <= rating ? (<use xlinkHref="#icon-full-star"></use>) : (<use xlinkHref="#icon-star"></use>)
-                }
-              </svg>
-            </React.Fragment>))}
-        <p className="visually-hidden">Оценка: {rating}</p>
+        <StarsRate rating = { rating }/>
       </div>
       <ul className="review-card__list">
         <li className="item-list"><span className="item-list__title">Достоинства:</span>

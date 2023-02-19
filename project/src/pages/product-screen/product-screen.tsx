@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { STARS_COUNT } from '../../const';
+import { useEffect, useState } from 'react';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
@@ -13,6 +12,7 @@ import SimilarCardsSlider from '../../components/similar-cards-slider/similar-ca
 import ReviewCardList from '../../components/review-card-list/review-card-list';
 import AddReview from '../../components/add-review/add-review';
 import ProductReviewSuccess from '../../components/product-review-success/product-review-success';
+import StarsRate from '../../components/stars-rate/stars-rate';
 
 function ProductScreen (): JSX.Element {
   const { id } = useParams();
@@ -83,16 +83,7 @@ function ProductScreen (): JSX.Element {
                 <div className="product__content">
                   <h1 className="title title--h3">{camera.name}</h1>
                   <div className="rate product__rate">
-                    {Array.from({length: STARS_COUNT}, (_, i) => i + 1).map((e, _) =>
-                      (
-                        <React.Fragment key={e}>
-                          <svg width="17" height="16" aria-hidden="true">
-                            {
-                              e <= camera.rating ? (<use xlinkHref="#icon-full-star"></use>) : (<use xlinkHref="#icon-star"></use>)
-                            }
-                          </svg>
-                        </React.Fragment>))}
-                    <p className="visually-hidden">Рейтинг: {camera.rating}</p>
+                    <StarsRate rating = { camera.rating }/>
                     <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{camera.reviewCount}</p>
                   </div>
                   <p className="product__price"><span className="visually-hidden">Цена:</span>{new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', minimumFractionDigits: 0 }).format(camera.price)}</p>
@@ -118,14 +109,19 @@ function ProductScreen (): JSX.Element {
               </div>
             </section>
           </div>
-          <div className="page-content__section">
-            <section className="product-similar">
-              <div className="container">
-                <h2 className="title title--h3">Похожие товары</h2>
-                <SimilarCardsSlider similarCameras = { similarCameras } />
-              </div>
-            </section>
-          </div>
+          {
+            similarCameras.length > 0 ?
+              (
+                <div className="page-content__section">
+                  <section className="product-similar">
+                    <div className="container">
+                      <h2 className="title title--h3">Похожие товары</h2>
+                      <SimilarCardsSlider similarCameras = { similarCameras } />
+                    </div>
+                  </section>
+                </div>
+              ) : ''
+          }
           <div className="page-content__section">
             <section className="review-block">
               <div className="container">

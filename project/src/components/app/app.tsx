@@ -3,6 +3,7 @@ import { AppRoute } from '../../const';
 import CatalogScreen from '../../pages/catalog-screen/catalog-screen';
 import ProductScreen from '../../pages/product-screen/product-screen';
 import BasketScreen from '../../pages/basket-screen/basket-screen';
+import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 
 function App(): JSX.Element {
   return (
@@ -27,6 +28,10 @@ function App(): JSX.Element {
           element = {
             <BasketScreen/>
           }
+        />
+        <Route
+          path='*'
+          element = {<NotFoundScreen/>}
         />
       </Routes>
     </BrowserRouter>
