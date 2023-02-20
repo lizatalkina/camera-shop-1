@@ -31,7 +31,7 @@ function ProductCard ( { camera }: CameraProps): JSX.Element {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <Link to={AppRoute.Product.replace(':id', `${id}`)} className="btn btn--transparent">Подробнее
+        <Link to={AppRoute.Product.replace(':id', `${id}`).replace(':type', 'information')} className="btn btn--transparent">Подробнее
         </Link>
       </div>
     </>

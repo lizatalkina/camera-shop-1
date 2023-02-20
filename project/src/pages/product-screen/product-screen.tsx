@@ -13,6 +13,8 @@ import ReviewCardList from '../../components/review-card-list/review-card-list';
 import AddReview from '../../components/add-review/add-review';
 import ProductReviewSuccess from '../../components/product-review-success/product-review-success';
 import StarsRate from '../../components/stars-rate/stars-rate';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 function ProductScreen (): JSX.Element {
   const { id } = useParams();
@@ -94,14 +96,18 @@ function ProductScreen (): JSX.Element {
                   </button>
                   <div className="tabs product__tabs">
                     <div className="tabs__controls product__tabs-controls">
-                      <button className={specifications ? 'tabs__control is-active' : 'tabs__control'} type="button"
-                        onClick = {() => handleClick()}
-                      >Характеристики
-                      </button>
-                      <button className={information ? 'tabs__control is-active' : 'tabs__control'} type="button"
-                        onClick = {() => handleClick()}
-                      >Описание
-                      </button>
+                      <Link to={AppRoute.Product.replace(':id', `${camera.id}`).replace(':type', 'specifications')}>
+                        <button className={specifications ? 'tabs__control is-active' : 'tabs__control'} type="button"
+                          onClick = {() => handleClick()}
+                        >Характеристики
+                        </button>
+                      </Link>
+                      <Link to={AppRoute.Product.replace(':id', `${camera.id}`).replace(':type', 'information')}>
+                        <button className={information ? 'tabs__control is-active' : 'tabs__control'} type="button"
+                          onClick = {() => handleClick()}
+                        >Описание
+                        </button>
+                      </Link>
                     </div>
                     <ProductTabs camera = {camera} specifications = {specifications} information = {information}/>
                   </div>
