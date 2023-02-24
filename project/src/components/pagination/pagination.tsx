@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { changeCurrentPage } from '../../store/actions';
+import { changeCurrentPage } from '../../store/catalog-data/catalog-data';
 import { useEffect } from 'react';
 
 type PaginationProps = {
@@ -27,7 +27,7 @@ function Pagination ({ currentPage, pageCount}: PaginationProps): JSX.Element {
             <li className="pagination__item"
               onClick = {(evt) => {
                 evt.preventDefault();
-                dispatch(changeCurrentPage({currentPage: currentPage - 1}));
+                dispatch(changeCurrentPage( currentPage - 1));
               }}
             >
               <Link to={AppRoute.CatalogPage.replace(':id', `${currentPage - 1}`)} className="pagination__link pagination__link--text">Назад
@@ -40,7 +40,7 @@ function Pagination ({ currentPage, pageCount}: PaginationProps): JSX.Element {
             <li className="pagination__item" key={Math.random()}
               onClick = {(evt) => {
                 evt.preventDefault();
-                dispatch(changeCurrentPage({currentPage: e}));
+                dispatch(changeCurrentPage(e));
               }}
             >
               <Link to={AppRoute.CatalogPage.replace(':id', `${e}`)} className={e !== currentPage ? 'pagination__link' : 'pagination__link pagination__link--active'}>{e}
@@ -52,7 +52,7 @@ function Pagination ({ currentPage, pageCount}: PaginationProps): JSX.Element {
             <li className="pagination__item"
               onClick = {(evt) => {
                 evt.preventDefault();
-                dispatch(changeCurrentPage({currentPage: currentPage + 1}));
+                dispatch(changeCurrentPage(currentPage + 1));
               }}
             >
               <Link to={AppRoute.CatalogPage.replace(':id', `${currentPage + 1}`)} className="pagination__link pagination__link--text">Далее

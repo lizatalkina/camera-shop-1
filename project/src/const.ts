@@ -27,3 +27,8 @@ export const USER_REVIEW: Adapter = {
   'user-comment': 'review',
   'rate': 'rating',
 };
+
+export enum NameSpace {
+  Catalog = 'CATALOG',
+  Product = 'PRODUCT',
+}

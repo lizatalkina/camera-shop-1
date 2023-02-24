@@ -1,4 +1,3 @@
-import React from 'react';
 import { Camera } from '../../types/camera';
 import ProductCard from '../product-card/product-card';
 import { useState } from 'react';

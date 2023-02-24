@@ -8,11 +8,12 @@ import ProductCardsList from '../../components/product-cards-list/product-cards-
 import Pagination from '../../components/pagination/pagination';
 import { useAppSelector } from '../../hooks';
 import { PAGE_SIZE } from '../../const';
+import { getCurrentPage, getPromo, getCameras } from '../../store/catalog-data/selectors';
 
 function CatalogScreen (): JSX.Element {
-  const cameras = useAppSelector((state) => state.cameras);
-  const promo = useAppSelector((state) => state.promo);
-  const currentPage = useAppSelector((state) => state.currentPage);
+  const cameras = useAppSelector(getCameras);
+  const promo = useAppSelector(getPromo);
+  const currentPage = useAppSelector(getCurrentPage);
   const pageCount = Math.ceil(cameras.length / PAGE_SIZE);
   const currentCameras = cameras.slice((currentPage - 1) * PAGE_SIZE, (currentPage - 1) * PAGE_SIZE + PAGE_SIZE);
 

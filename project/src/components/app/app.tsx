@@ -4,8 +4,18 @@ import CatalogScreen from '../../pages/catalog-screen/catalog-screen';
 import ProductScreen from '../../pages/product-screen/product-screen';
 import BasketScreen from '../../pages/basket-screen/basket-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
+import { useAppSelector } from '../../hooks';
+import { getLoadedCatalogDataStatus } from '../../store/catalog-data/selectors';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 function App(): JSX.Element {
+  const isCatalogDataLoaded = useAppSelector(getLoadedCatalogDataStatus);
+
+  if (isCatalogDataLoaded) {
+    return (
+      <LoadingScreen/>
+    );
+  }
   return (
     <BrowserRouter>
       <Routes>

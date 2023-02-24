@@ -7,7 +7,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import { fetchCameraAction, fetchSimilarCamerasAction, fetchReviewsAction } from '../../store/api-actions';
 import ProductTabs from '../../components/product-tabs/product-tabs';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { getCamera, getSimilarCameras, getReviews} from '../../store/actions';
+import { getCamera, getSimilarCameras, getReviews } from '../../store/product-data/selectors';
 import SimilarCardsSlider from '../../components/similar-cards-slider/similar-cards-slider';
 import ReviewCardList from '../../components/review-card-list/review-card-list';
 import AddReview from '../../components/add-review/add-review';
@@ -15,13 +15,14 @@ import ProductReviewSuccess from '../../components/product-review-success/produc
 import StarsRate from '../../components/stars-rate/stars-rate';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { setInitialProductState } from '../../store/product-data/product-data';
 
 function ProductScreen (): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const camera = useAppSelector((state) => state.camera);
-  const reviews = useAppSelector((state) => state.reviews);
-  const similarCameras = useAppSelector((state) => state.similarCameras);
+  const camera = useAppSelector(getCamera);
+  const reviews = useAppSelector(getReviews);
+  const similarCameras = useAppSelector(getSimilarCameras);
   const [specifications, setSpecifications] = useState(false);
   const [information, setInformation] = useState(true);
   const [modalAddReviewIsOpen, setModalAddReviewIsOpen] = useState(false);
@@ -61,9 +62,7 @@ function ProductScreen (): JSX.Element {
     dispatch(fetchSimilarCamerasAction(String(id)));
     dispatch(fetchReviewsAction(String(id)));
     return () => {
-      dispatch(getCamera({camera : null}));
-      dispatch(getSimilarCameras({similarCameras : []}));
-      dispatch(getReviews({reviews: []}));
+      dispatch(setInitialProductState());
     };
   }, [dispatch, id]);
 

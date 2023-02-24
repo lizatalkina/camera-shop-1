@@ -1,4 +1,3 @@
-import React from 'react';
 import { Camera } from '../../types/camera';
 import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
