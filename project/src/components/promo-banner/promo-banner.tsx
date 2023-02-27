@@ -9,7 +9,7 @@ type PromoProps = {
 function PromoBanner ({ promo }: PromoProps): JSX.Element {
   const { id, name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x } = promo;
   return (
-    <div className="banner">
+    <div className="banner" data-testid="promo-banner">
       <picture>
         <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x}`}/>
         <img src={previewImg} srcSet={previewImg2x} width="1280" height="280" alt="баннер"/>

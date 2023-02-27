@@ -11,7 +11,7 @@ function ProductCardsList (props: ListProps): JSX.Element {
     <div className="cards catalog__cards">
       {
         cameras.map((camera) => (
-          <div className="product-card" key={camera.id}>
+          <div className="product-card" key={camera.id} data-testid="product-card">
             <ProductCard camera = { camera }/>
           </div>
         ))

@@ -37,7 +37,7 @@ function Pagination ({ currentPage, pageCount}: PaginationProps): JSX.Element {
         }
         {Array.from({length: pageCount}, (_, i) => i + 1).map((e, _) =>
           (
-            <li className="pagination__item" key={Math.random()}
+            <li className="pagination__item" data-testid="pagination-item" key={Math.random() }
               onClick = {(evt) => {
                 evt.preventDefault();
                 dispatch(changeCurrentPage(e));

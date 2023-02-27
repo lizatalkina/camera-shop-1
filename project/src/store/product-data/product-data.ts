@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { ProductData } from '../../types/state';
-import { fetchCameraAction, fetchSimilarCamerasAction, fetchReviewsAction, postReview } from '../api-actions';
+import { fetchCameraAction, fetchSimilarCamerasAction, fetchReviewsAction } from '../api-actions';
 
 const initialState: ProductData = {
   camera: null,
@@ -28,9 +28,6 @@ export const productData = createSlice({
         state.similarCameras = action.payload;
       })
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
-        state.reviews = action.payload;
-      })
-      .addCase(postReview.fulfilled, (state, action) => {
         state.reviews = action.payload;
       });
   }

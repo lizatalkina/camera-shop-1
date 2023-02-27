@@ -66,7 +66,7 @@ export const fetchReviewsAction = createAsyncThunk<Review[], string, {
   },
 );
 
-export const postReview = createAsyncThunk<Review[], Review, {
+export const postReview = createAsyncThunk<void, Review, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -81,7 +81,6 @@ export const postReview = createAsyncThunk<Review[], Review, {
       review,
       rating
     });
-    const {data} = await api.get<Review[]>(APIRoute.Reviews.replace(':id', `${cameraId}`));
-    return data;
+    dispatch(fetchReviewsAction(String(cameraId)));
   }
 );

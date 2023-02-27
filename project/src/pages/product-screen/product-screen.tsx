@@ -81,7 +81,7 @@ function ProductScreen (): JSX.Element {
                     <img src="img/content/img1.jpg" srcSet={camera.previewImg2x} width="560" height="480" alt={camera.name}/>
                   </picture>
                 </div>
-                <div className="product__content">
+                <div className="product__content" data-testid="product">
                   <h1 className="title title--h3">{camera.name}</h1>
                   <div className="rate product__rate">
                     <StarsRate rating = { camera.rating }/>
