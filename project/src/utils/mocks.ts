@@ -17,7 +17,7 @@ export const makeFakeCamera = (): Camera => ({
   previewImg2x: image.technics(),
   previewImgWebp: image.technics(),
   previewImgWebp2x: image.technics(),
-  reviewCount: datatype.number({min: 0, max: 1000})
+  reviewCount: datatype.number({min: 1, max: 1000})
 } as Camera);
 
 export const makeFakePromo = (): Promo => ({

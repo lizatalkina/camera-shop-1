@@ -11,9 +11,9 @@ function StarsRate ({rating}: StarsRateProps): JSX.Element {
       {Array.from({length: STARS_COUNT}, (_, i) => i + 1).map((e, _) =>
         (
           <React.Fragment key={e}>
-            <svg width="17" height="16" aria-hidden="true">
+            <svg width="17" height="16" aria-hidden="true" data-testid="star">
               {
-                e <= rating ? (<use xlinkHref="#icon-full-star"></use>) : (<use xlinkHref="#icon-star"></use>)
+                e <= rating ? (<use xlinkHref="#icon-full-star" data-testid="full-star"></use>) : (<use xlinkHref="#icon-star"></use>)
               }
             </svg>
           </React.Fragment>))}

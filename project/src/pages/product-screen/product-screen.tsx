@@ -73,7 +73,7 @@ function ProductScreen (): JSX.Element {
         <div className="page-content">
           <Breadcrumbs name = {camera.name}/>
           <div className="page-content__section">
-            <section className="product">
+            <section className="product" data-testid="product">
               <div className="container">
                 <div className="product__img">
                   <picture>
@@ -81,7 +81,7 @@ function ProductScreen (): JSX.Element {
                     <img src="img/content/img1.jpg" srcSet={camera.previewImg2x} width="560" height="480" alt={camera.name}/>
                   </picture>
                 </div>
-                <div className="product__content" data-testid="product">
+                <div className="product__content">
                   <h1 className="title title--h3">{camera.name}</h1>
                   <div className="rate product__rate">
                     <StarsRate rating = { camera.rating }/>
@@ -96,7 +96,7 @@ function ProductScreen (): JSX.Element {
                   <div className="tabs product__tabs">
                     <div className="tabs__controls product__tabs-controls">
                       <Link to={AppRoute.Product.replace(':id', `${camera.id}`).replace(':type', 'specifications')}>
-                        <button className={specifications ? 'tabs__control is-active' : 'tabs__control'} type="button"
+                        <button className={specifications ? 'tabs__control is-active' : 'tabs__control'} type="button" data-testid="specifications-button"
                           onClick = {() => handleClick()}
                         >Характеристики
                         </button>

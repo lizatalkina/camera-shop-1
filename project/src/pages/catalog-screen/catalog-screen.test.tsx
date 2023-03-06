@@ -1,21 +1,16 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
+import { makeFakeCamera, makeFakePromo } from '../../utils/mocks';
+import HistoryRouter from '../../components/history-route/history-route';
+import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import App from './app';
-import { render, screen } from '@testing-library/react';
-import {createMemoryHistory} from 'history';
+import App from '../../components/app/app';
 import { AppRoute } from '../../const';
-import HistoryRouter from '../history-route/history-route';
-import { makeFakeCamera, makeFakePromo, makeFakeReview } from '../../utils/mocks';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import thunk from 'redux-thunk';
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
+const mockStore = configureMockStore();
 const cameras = Array.from({length: 20}, () => makeFakeCamera());
 const promoBanner = makeFakePromo();
-const camera = makeFakeCamera();
-const similarCameras = Array.from({length: 5}, () => makeFakeCamera());
-const fakeReviews = Array.from({length: 5}, () => makeFakeReview(camera.id));
 
 const store = mockStore({
   CATALOG: {
@@ -23,11 +18,6 @@ const store = mockStore({
     cameras: cameras,
     promo: promoBanner,
     currentPage: 1,
-  },
-  PRODUCT: {
-    camera: camera,
-    similarCameras: similarCameras,
-    reviews: fakeReviews,
   },
 });
 
@@ -41,11 +31,10 @@ const fakeApp = (
   </Provider>
 );
 
-describe('Application Routing', () => {
-  it('should render CatalogScreen when user navigate to "/"', () => {
-    history.push(AppRoute.Catalog);
+describe('Component: CatalogScreen', () => {
+  it('should render correctly', () => {
     window.scrollTo = jest.fn();
-
+    history.push(AppRoute.Catalog);
     render(fakeApp);
     expect(screen.getByTestId('promo-banner')).toBeInTheDocument();
     expect(screen.getByText(/Каталог фото- и видеотехники/i)).toBeInTheDocument();
@@ -53,7 +42,7 @@ describe('Application Routing', () => {
     expect(productCards.length).toBeGreaterThan(0);
     expect(window.scrollTo).toHaveBeenCalledWith({behavior: 'smooth', top: 0});
   });
-  it('should render CatalogScreenPage when user navigate to "/page-:id"', async () => {
+  it('CatalogScreenPage should render correctly', async () => {
     history.push(AppRoute.CatalogPage);
     window.scrollTo = jest.fn();
 
@@ -64,13 +53,9 @@ describe('Application Routing', () => {
         promo: promoBanner,
         currentPage: 2,
       },
-      PRODUCT: {
-        camera: null,
-        similarCameras: [],
-        reviews: [],
-      },
     });
 
+    const user = userEvent.setup();
     render(
       <Provider store = { mockStoreWithFakeCurrentPage }>
         <HistoryRouter history = { history }>
@@ -86,24 +71,7 @@ describe('Application Routing', () => {
     expect(window.scrollTo).toHaveBeenCalledWith({behavior: 'smooth', top: 0});
 
     const pages = screen.getAllByTestId('pagination-item');
-    await userEvent.click(pages[1]);
-    expect(screen.getByText(/Назад/i)).toBeInTheDocument();
-  });
-  it('should render ProductScreen when user navigate to "/catalog/:id/:type"', () => {
-    history.push(AppRoute.Product.replace(':id', `${camera.id}`).replace(':type', 'information'));
-
-    render(fakeApp);
-
-    expect(screen.getByTestId('product')).toBeInTheDocument();
-    expect(screen.getByText(/Похожие товары/i)).toBeInTheDocument();
-    expect(screen.getByText(/Отзывы/i)).toBeInTheDocument();
-  });
-  it('should render "NotFoundScreen" when user navigate to non-existent route', () => {
-    history.push('/non-existent-route');
-
-    render(fakeApp);
-
-    expect(screen.getByText(/404. Страница не найдена/i)).toBeInTheDocument();
-    expect(screen.getByText(/На главную/i)).toBeInTheDocument();
+    await user.click(pages[2]);
+    expect(await waitFor(() => screen.findByTestId('pagination-item-back'))).toBeInTheDocument();
   });
 });

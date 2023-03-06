@@ -24,7 +24,7 @@ function Pagination ({ currentPage, pageCount}: PaginationProps): JSX.Element {
       <ul className="pagination__list">
         {
           currentPage > 1 ? (
-            <li className="pagination__item"
+            <li className="pagination__item" data-testid="pagination-item-back"
               onClick = {(evt) => {
                 evt.preventDefault();
                 dispatch(changeCurrentPage( currentPage - 1));

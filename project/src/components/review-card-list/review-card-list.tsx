@@ -32,7 +32,7 @@ function ReviewCardList ({ reviews }: ReviewsListProps): JSX.Element {
       </ul>
       {
         countOfVisibleReviews < reviews.length - REVIEWS_MAX_COUNT + 1 ? (
-          <div className="review-block__buttons">
+          <div className="review-block__buttons" data-testid="show-more-button">
             <button className="btn btn--purple" type="button"
               onClick={handleButtonClick}
             >Показать больше отзывов

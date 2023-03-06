@@ -9,7 +9,7 @@ type TapsProps = {
 function ProductTabs ({camera, specifications, information}: TapsProps): JSX.Element {
   return (
     <div className="tabs__content">
-      <div className={ specifications ? 'tabs__element is-active' : 'tabs__element'}>
+      <div className={ specifications ? 'tabs__element is-active' : 'tabs__element'} data-testid="specifications">
         <ul className="product__tabs-list">
           <li className="item-list"><span className="item-list__title">Артикул:</span>
             <p className="item-list__text"> {camera.vendorCode}</p>
@@ -25,7 +25,7 @@ function ProductTabs ({camera, specifications, information}: TapsProps): JSX.Ele
           </li>
         </ul>
       </div>
-      <div className={ information ? 'tabs__element is-active' : 'tabs__element'}>
+      <div className={ information ? 'tabs__element is-active' : 'tabs__element'} data-testid="information">
         <div className="product__tabs-text">
           {camera.description}
         </div>
