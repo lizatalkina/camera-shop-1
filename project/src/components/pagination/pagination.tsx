@@ -1,16 +1,14 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { useAppDispatch } from '../../hooks';
-import { changeCurrentPage } from '../../store/catalog-data/catalog-data';
 import { useEffect } from 'react';
 
 type PaginationProps = {
   currentPage: number;
   pageCount: number;
+  onChangeCurrentPage: (e: number) => void;
 };
 
-function Pagination ({ currentPage, pageCount}: PaginationProps): JSX.Element {
-  const dispatch = useAppDispatch();
+function Pagination ({ currentPage, pageCount, onChangeCurrentPage}: PaginationProps): JSX.Element {
 
   useEffect(() => {
     window.scrollTo({
@@ -27,7 +25,7 @@ function Pagination ({ currentPage, pageCount}: PaginationProps): JSX.Element {
             <li className="pagination__item" data-testid="pagination-item-back"
               onClick = {(evt) => {
                 evt.preventDefault();
-                dispatch(changeCurrentPage( currentPage - 1));
+                onChangeCurrentPage(currentPage - 1);
               }}
             >
               <Link to={AppRoute.CatalogPage.replace(':id', `${currentPage - 1}`)} className="pagination__link pagination__link--text">Назад
@@ -40,7 +38,7 @@ function Pagination ({ currentPage, pageCount}: PaginationProps): JSX.Element {
             <li className="pagination__item" data-testid="pagination-item" key={Math.random() }
               onClick = {(evt) => {
                 evt.preventDefault();
-                dispatch(changeCurrentPage(e));
+                onChangeCurrentPage(e);
               }}
             >
               <Link to={AppRoute.CatalogPage.replace(':id', `${e}`)} className={e !== currentPage ? 'pagination__link' : 'pagination__link pagination__link--active'}>{e}
@@ -49,10 +47,10 @@ function Pagination ({ currentPage, pageCount}: PaginationProps): JSX.Element {
           ))}
         {
           currentPage < pageCount ? (
-            <li className="pagination__item"
+            <li className="pagination__item" data-testid="pagination-item-next"
               onClick = {(evt) => {
                 evt.preventDefault();
-                dispatch(changeCurrentPage(currentPage + 1));
+                onChangeCurrentPage(currentPage + 1);
               }}
             >
               <Link to={AppRoute.CatalogPage.replace(':id', `${currentPage + 1}`)} className="pagination__link pagination__link--text">Далее

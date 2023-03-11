@@ -22,7 +22,7 @@ function SimilarCardsSlider ({similarCameras}: SliderProps ): JSX.Element {
   };
 
   return (
-    <div className="product-similar__slider">
+    <div className="product-similar__slider" data-testid="similar-cards">
       <div className="product-similar__slider-list">
         {
           similarCameras.map((similarCamera, i) => (

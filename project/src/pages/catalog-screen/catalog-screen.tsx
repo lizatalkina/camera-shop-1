@@ -9,14 +9,20 @@ import Pagination from '../../components/pagination/pagination';
 import { useAppSelector } from '../../hooks';
 import { PAGE_SIZE } from '../../const';
 import { getCurrentPage, getPromo, getCameras } from '../../store/catalog-data/selectors';
+import { useAppDispatch } from '../../hooks';
+import { changeCurrentPage } from '../../store/catalog-data/catalog-data';
 
 function CatalogScreen (): JSX.Element {
+  const dispatch = useAppDispatch();
   const cameras = useAppSelector(getCameras);
   const promo = useAppSelector(getPromo);
   const currentPage = useAppSelector(getCurrentPage);
   const pageCount = Math.ceil(cameras.length / PAGE_SIZE);
   const currentCameras = cameras.slice((currentPage - 1) * PAGE_SIZE, (currentPage - 1) * PAGE_SIZE + PAGE_SIZE);
 
+  const handleChangeCurrentPage = (e: number) => {
+    dispatch(changeCurrentPage(e));
+  };
   return (
     <>
       <Header/>
@@ -34,7 +40,11 @@ function CatalogScreen (): JSX.Element {
                 <div className="catalog__content">
                   <Sorting/>
                   <ProductCardsList cameras = { currentCameras }/>
-                  <Pagination currentPage = {currentPage} pageCount = {pageCount}/>
+                  <Pagination
+                    currentPage = {currentPage}
+                    pageCount = {pageCount}
+                    onChangeCurrentPage = { handleChangeCurrentPage }
+                  />
                 </div>
               </div>
             </div>

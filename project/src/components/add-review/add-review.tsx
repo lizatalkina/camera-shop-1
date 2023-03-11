@@ -116,7 +116,7 @@ function AddReview ({isModalOpened, onCloseModal, cameraId, openSuccessPostModal
           </div>
           <div className="modal__content">
             <p className="title title--h4">Оставить отзыв</p>
-            <div className="form-review">
+            <div className="form-review" data-testid="add-review">
               <form method="post"
                 onSubmit = { handlePostReview }
               >
@@ -132,7 +132,7 @@ function AddReview ({isModalOpened, onCloseModal, cameraId, openSuccessPostModal
                         {RATINGS.map((rating, i) =>
                           (
                             <React.Fragment key={`${RATINGS.length - i}-stars`}>
-                              <input className="visually-hidden" id={`star-${RATINGS.length - i}`} name="rate" type="radio" value={RATINGS.length - i}
+                              <input className="visually-hidden" id={`star-${RATINGS.length - i}`} data-testid="review-star" name="rate" type="radio" value={RATINGS.length - i}
                                 checked = { userReview.rating.toString() === (RATINGS.length - i).toString() }
                                 onChange = { dataChangeHandle }
                               />

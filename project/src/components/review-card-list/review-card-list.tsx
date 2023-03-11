@@ -21,10 +21,10 @@ function ReviewCardList ({ reviews }: ReviewsListProps): JSX.Element {
 
   return (
     <>
-      <ul className="review-block__list">
+      <ul className="review-block__list" data-testid="reviews-block">
         {
           reviewsToShow.map((reviewToShow) => (
-            <li className="review-card" key={ reviewToShow.id}>
+            <li className="review-card" key={ reviewToShow.id} data-testid="review-card">
               <ReviewCard reviewItem = { reviewToShow }/>
             </li>
           ))

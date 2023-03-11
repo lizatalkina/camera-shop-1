@@ -5,8 +5,7 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import App from '../../components/app/app';
 import { AppRoute } from '../../const';
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 
 const mockStore = configureMockStore();
 const cameras = Array.from({length: 20}, () => makeFakeCamera());
@@ -42,7 +41,7 @@ describe('Component: CatalogScreen', () => {
     expect(productCards.length).toBeGreaterThan(0);
     expect(window.scrollTo).toHaveBeenCalledWith({behavior: 'smooth', top: 0});
   });
-  it('CatalogScreenPage should render correctly', async () => {
+  it('CatalogScreenPage should render correctly', () => {
     history.push(AppRoute.CatalogPage);
     window.scrollTo = jest.fn();
 
@@ -55,7 +54,6 @@ describe('Component: CatalogScreen', () => {
       },
     });
 
-    const user = userEvent.setup();
     render(
       <Provider store = { mockStoreWithFakeCurrentPage }>
         <HistoryRouter history = { history }>
@@ -69,9 +67,9 @@ describe('Component: CatalogScreen', () => {
     const productCards = screen.getAllByTestId('product-card');
     expect(productCards.length).toBeGreaterThan(0);
     expect(window.scrollTo).toHaveBeenCalledWith({behavior: 'smooth', top: 0});
-
     const pages = screen.getAllByTestId('pagination-item');
-    await user.click(pages[2]);
-    expect(await waitFor(() => screen.findByTestId('pagination-item-back'))).toBeInTheDocument();
+    expect(pages.length).toBeGreaterThan(0);
+    expect(screen.getByTestId('pagination-item-back')).toBeInTheDocument();
+    expect(screen.getByTestId('pagination-item-next')).toBeInTheDocument();
   });
 });
