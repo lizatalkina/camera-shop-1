@@ -1,6 +1,6 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { makeFakeCamera, makeFakePromo } from '../../utils/mocks';
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../../components/history-router/history-router';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import App from '../../components/app/app';

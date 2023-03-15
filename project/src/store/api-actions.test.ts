@@ -119,6 +119,7 @@ describe('Async actions', () => {
     expect(actions).toEqual([
       postReview.pending.type,
       fetchReviewsAction.pending.type,
+      fetchCameraAction.pending.type,
       postReview.fulfilled.type,
     ]);
   });

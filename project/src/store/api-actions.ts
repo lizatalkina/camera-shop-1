@@ -82,5 +82,6 @@ export const postReview = createAsyncThunk<void, Review, {
       rating
     });
     dispatch(fetchReviewsAction(String(cameraId)));
+    dispatch(fetchCameraAction(String(cameraId)));
   }
 );

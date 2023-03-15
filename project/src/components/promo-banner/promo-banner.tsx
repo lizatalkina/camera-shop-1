@@ -18,7 +18,7 @@ function PromoBanner ({ promo }: PromoProps): JSX.Element {
         <span className="banner__message">Новинка!</span>
         <span className="title title--h1">{name}</span>
         <span className="banner__text">Профессиональная камера от&nbsp;известного производителя</span>
-        <Link to={AppRoute.Product.replace(':id', `${id}`)} className="btn">Подробнее</Link>
+        <Link to={AppRoute.Product.replace(':id', `${id}`).replace(':type', 'information')} className="btn">Подробнее</Link>
       </p>
     </div>
   );

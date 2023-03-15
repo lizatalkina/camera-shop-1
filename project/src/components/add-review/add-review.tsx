@@ -136,7 +136,7 @@ function AddReview ({isModalOpened, onCloseModal, cameraId, openSuccessPostModal
                                 checked = { userReview.rating.toString() === (RATINGS.length - i).toString() }
                                 onChange = { dataChangeHandle }
                               />
-                              <label className="rate__label" htmlFor={`star-${RATINGS.length - i}`} title={RATINGS[RATINGS.length - i]}></label>
+                              <label className="rate__label" htmlFor={`star-${RATINGS.length - i}`} title={rating}></label>
                             </React.Fragment>
                           ))}
                       </div>

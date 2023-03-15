@@ -16,15 +16,17 @@ import StarsRate from '../../components/stars-rate/stars-rate';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { setInitialProductState } from '../../store/product-data/product-data';
+import { CURRENCY_RUB } from '../../const';
 
 function ProductScreen (): JSX.Element {
   const { id } = useParams();
+  const { type } = useParams();
   const dispatch = useAppDispatch();
   const camera = useAppSelector(getCamera);
   const reviews = useAppSelector(getReviews);
   const similarCameras = useAppSelector(getSimilarCameras);
-  const [specifications, setSpecifications] = useState(false);
-  const [information, setInformation] = useState(true);
+  const [specifications, setSpecifications] = useState(type === 'specifications');
+  const [information, setInformation] = useState(type === 'information');
   const [modalAddReviewIsOpen, setModalAddReviewIsOpen] = useState(false);
   const [modalSuccessPostReviewIsOpen, setModalSuccessPostReviewIsOpen] = useState(false);
 
@@ -87,7 +89,7 @@ function ProductScreen (): JSX.Element {
                     <StarsRate rating = { camera.rating }/>
                     <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{camera.reviewCount}</p>
                   </div>
-                  <p className="product__price"><span className="visually-hidden">Цена:</span>{new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', minimumFractionDigits: 0 }).format(camera.price)}</p>
+                  <p className="product__price"><span className="visually-hidden">Цена:</span>{new Intl.NumberFormat('ru-RU', { style: 'currency', currency: CURRENCY_RUB, minimumFractionDigits: 0 }).format(camera.price)}</p>
                   <button className="btn btn--purple" type="button">
                     <svg width="24" height="16" aria-hidden="true">
                       <use xlinkHref="#icon-add-basket"></use>
@@ -102,7 +104,7 @@ function ProductScreen (): JSX.Element {
                         </button>
                       </Link>
                       <Link to={AppRoute.Product.replace(':id', `${camera.id}`).replace(':type', 'information')}>
-                        <button className={information ? 'tabs__control is-active' : 'tabs__control'} type="button"
+                        <button className={information ? 'tabs__control is-active' : 'tabs__control'} type="button" data-testid="information-button"
                           onClick = {() => handleClick()}
                         >Описание
                         </button>

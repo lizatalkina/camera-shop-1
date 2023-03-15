@@ -1,6 +1,6 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { makeFakePromo } from '../../utils/mocks';
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import PromoBanner from './promo-banner';

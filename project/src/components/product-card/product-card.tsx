@@ -2,6 +2,7 @@ import { Camera } from '../../types/camera';
 import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
 import StarsRate from '../stars-rate/stars-rate';
+import { CURRENCY_RUB } from '../../const';
 
 type CameraProps = {
   camera: Camera;
@@ -24,7 +25,7 @@ function ProductCard ( { camera }: CameraProps): JSX.Element {
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
         </div>
         <p className="product-card__title">{name}</p>
-        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', minimumFractionDigits: 0 }).format(price)}
+        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{new Intl.NumberFormat('ru-RU', { style: 'currency', currency: CURRENCY_RUB, minimumFractionDigits: 0 }).format(price)}
         </p>
       </div>
       <div className="product-card__buttons">

@@ -4,7 +4,7 @@ import { makeFakeCamera, makeFakeReview } from '../../utils/mocks';
 import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../../components/history-router/history-router';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import ProductScreen from './product-screen';
@@ -27,7 +27,7 @@ const history = createMemoryHistory();
 history.push(AppRoute.Product.replace(':id', `${camera.id}`).replace(':type', 'information'));
 
 describe('Component: ProductScreen', () => {
-  it('should render correctly', () => {
+  it('should render correctly', async () => {
     render(
       <Provider store = { store }>
         <HistoryRouter history = { history }>
@@ -47,10 +47,11 @@ describe('Component: ProductScreen', () => {
     expect(screen.getByTestId('product')).toBeInTheDocument();
     expect(screen.getByText(/Похожие товары/i)).toBeInTheDocument();
     expect(screen.getByText(/Отзывы/i)).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(`${camera.reviewCount}`, 'i'))).toBeInTheDocument();
+    const reviewCount = await screen.findByText(new RegExp(`${camera.reviewCount}`, 'i'));
+    expect(reviewCount).toBeInTheDocument();
     const camerasNames = screen.queryAllByText(new RegExp(`${camera.name}`, 'i'));
     expect(camerasNames.length).toBeGreaterThan(1);
-    expect(screen.getByTestId('information')).toHaveClass('is-active');
-    expect(screen.getByTestId('specifications')).not.toHaveClass('is-active');
+    expect(screen.getByTestId('information-button')).toBeInTheDocument();
+    expect(screen.getByTestId('specifications-button')).toBeInTheDocument();
   });
 });

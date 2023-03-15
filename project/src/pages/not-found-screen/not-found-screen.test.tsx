@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import NotFoundScreen from './not-found-screen';
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../../components/history-router/history-router';
 import { createMemoryHistory } from 'history';
 
 describe('Component: NotFoundScreen', () => {

@@ -1,4 +1,4 @@
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import { createMemoryHistory } from 'history';
 import StarsRate from './stars-rate';
 import { render, screen } from '@testing-library/react';

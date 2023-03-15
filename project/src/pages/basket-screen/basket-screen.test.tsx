@@ -1,4 +1,4 @@
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../../components/history-router/history-router';
 import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
 import BasketScreen from './basket-screen';

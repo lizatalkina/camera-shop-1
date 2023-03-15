@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import { createMemoryHistory } from 'history';
 import ReviewCard from './review-card';
 import { makeFakeReview, makeFakeCamera } from '../../utils/mocks';

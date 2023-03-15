@@ -1,4 +1,4 @@
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import { createMemoryHistory } from 'history';
 import Pagination from './pagination';
 import { render, screen } from '@testing-library/react';

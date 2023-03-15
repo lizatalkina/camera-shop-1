@@ -19,6 +19,8 @@ export const STARS_COUNT = 5;
 
 export const REVIEWS_MAX_COUNT = 3;
 
+export const CURRENCY_RUB = 'RUB';
+
 type Adapter = Record<string, string>;
 export const USER_REVIEW: Adapter = {
   'user-name': 'userName',
