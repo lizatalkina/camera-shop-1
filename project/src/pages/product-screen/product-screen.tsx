@@ -44,7 +44,6 @@ function ProductScreen (): JSX.Element {
 
   const openAddReviewFromParent = () => {
     setModalAddReviewIsOpen(true);
-    scrollToTop();
   };
 
   const handleCloseSuccessPostReviewModal = () => {
