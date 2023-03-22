@@ -33,4 +33,5 @@ export const USER_REVIEW: Adapter = {
 export enum NameSpace {
   Catalog = 'CATALOG',
   Product = 'PRODUCT',
+  Search = 'SEARCH',
 }
