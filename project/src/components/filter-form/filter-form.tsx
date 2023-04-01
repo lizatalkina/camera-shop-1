@@ -1,4 +1,31 @@
+import { CATEGORIES, CATEGORIES_OPTIONS, TYPES, TYPES_OPTIONS, LEVELS, LEVEL_OPTIONS, Categories, CamerasTypes, CamerasLevel } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { ChangeEvent } from 'react';
+import { changePrice, changePriceUp, changeCategory, changeType, changeLevel, setInitialFilterState } from '../../store/catalog-data/catalog-data';
+
 function FilterForm (): JSX.Element {
+
+  const dispatch = useAppDispatch();
+  const currentPrice = useAppSelector((state) => state.CATALOG.price);
+  const currentPriceUp = useAppSelector((state) => state.CATALOG.priceUp);
+  const currentCategory = useAppSelector((state) => state.CATALOG.category);
+  const currentTypes = useAppSelector((state) => state.CATALOG.types);
+  const currentLevels = useAppSelector((state) => state.CATALOG.levels);
+
+  const handlePriceChange = (
+    evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { value } = evt.target;
+    dispatch(changePrice(Number(value)));
+  };
+
+  const handlePriceUpChange = (
+    evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { value } = evt.target;
+    dispatch(changePriceUp(Number(value)));
+  };
+
   return (
     <div className="catalog-filter">
       <form action="#">
@@ -8,71 +35,74 @@ function FilterForm (): JSX.Element {
           <div className="catalog-filter__price-range">
             <div className="custom-input">
               <label>
-                <input type="number" name="price" placeholder="от"/>
+                <input type="number" name="price" placeholder="от"
+                  onChange = { handlePriceChange }
+                />
               </label>
             </div>
             <div className="custom-input">
               <label>
-                <input type="number" name="priceUp" placeholder="до"/>
+                <input type="number" name="priceUp" placeholder="до"
+                  onChange = { handlePriceUpChange }
+                />
               </label>
             </div>
           </div>
         </fieldset>
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Категория</legend>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="photocamera"/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Фотокамера</span>
-            </label>
-          </div>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="videocamera"/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Видеокамера</span>
-            </label>
-          </div>
+          {
+            CATEGORIES.map((category) => (
+              <div className="custom-checkbox catalog-filter__item" key={Math.random()}>
+                <label>
+                  <input type="checkbox" name={category} checked = { category === currentCategory }
+                    onChange = {() => dispatch(changeCategory(category as Categories))}
+                  />
+                  <span className="custom-checkbox__icon">
+                  </span><span className="custom-checkbox__label">{CATEGORIES_OPTIONS[category]}</span>
+                </label>
+              </div>
+            ))
+          }
         </fieldset>
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Тип камеры</legend>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="digital"/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Цифровая</span>
-            </label>
-          </div>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="film" disabled/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Плёночная</span>
-            </label>
-          </div>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="snapshot"/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Моментальная</span>
-            </label>
-          </div>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="collection" disabled/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Коллекционная</span>
-            </label>
-          </div>
+          {
+            TYPES.map((type) => (
+              <div className="custom-checkbox catalog-filter__item" key={Math.random()}>
+                <label>
+                  <input type="checkbox" name={type} checked = { currentTypes.indexOf(type as CamerasTypes) !== -1 }
+                    onChange = {() => dispatch(changeType(type as CamerasTypes))}
+                    disabled = { currentCategory === 'videocamera' && (type === 'snapshot' || type === 'film' )}
+                  />
+                  <span className="custom-checkbox__icon">
+                  </span>
+                  <span className="custom-checkbox__label">{TYPES_OPTIONS[type]}</span>
+                </label>
+              </div>
+            ))
+          }
         </fieldset>
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Уровень</legend>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="zero"/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Нулевой</span>
-            </label>
-          </div>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="non-professional"/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Любительский</span>
-            </label>
-          </div>
-          <div className="custom-checkbox catalog-filter__item">
-            <label>
-              <input type="checkbox" name="professional"/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Профессиональный</span>
-            </label>
-          </div>
+          {
+            LEVELS.map((level) => (
+              <div className="custom-checkbox catalog-filter__item" key={Math.random()}>
+                <label>
+                  <input type="checkbox" name={level} checked = { currentLevels.indexOf(level as CamerasLevel) !== -1 }
+                    onChange = {() => dispatch(changeLevel(level as CamerasLevel))}
+                  />
+                  <span className="custom-checkbox__icon"></span>
+                  <span className="custom-checkbox__label">{LEVEL_OPTIONS[level]}</span>
+                </label>
+              </div>
+            ))
+          }
         </fieldset>
-        <button className="btn catalog-filter__reset-btn" type="reset">Сбросить фильтры
+        <button className="btn catalog-filter__reset-btn" type="reset"
+          onClick={() => dispatch(setInitialFilterState())}
+          disabled = {(currentPrice === 0 && currentPriceUp === 0 && Object.keys(currentCategory).length === 0 && currentTypes.length === 0 && currentLevels.length === 0)}
+        >Сбросить фильтры
         </button>
       </form>
     </div>
