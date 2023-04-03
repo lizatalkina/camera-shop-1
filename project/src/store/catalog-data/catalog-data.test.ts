@@ -22,7 +22,8 @@ describe('Reducer: catalogData', () => {
         types: [] as CamerasTypes[],
         levels: [] as CamerasLevel[],
         sort: '' as SortType,
-        order: '' as OrderType});
+        order: '' as OrderType,
+        query: ''});
   });
   it('should update cameras by load cameras', () => {
     const state = {
@@ -36,7 +37,8 @@ describe('Reducer: catalogData', () => {
       types: [] as CamerasTypes[],
       levels: [] as CamerasLevel[],
       sort: '' as SortType,
-      order: '' as OrderType};
+      order: '' as OrderType,
+      query: ''};
     expect(catalogData.reducer(state, {type: fetchCamerasAction.fulfilled.type, payload: cameras}))
       .toEqual({
         isCatalogDataLoaded: false,
@@ -49,7 +51,8 @@ describe('Reducer: catalogData', () => {
         types: [] as CamerasTypes[],
         levels: [] as CamerasLevel[],
         sort: '' as SortType,
-        order: '' as OrderType});
+        order: '' as OrderType,
+        query: ''});
   });
   it('should update promo by load promo', () => {
     const state = {
@@ -63,7 +66,8 @@ describe('Reducer: catalogData', () => {
       types: [] as CamerasTypes[],
       levels: [] as CamerasLevel[],
       sort: '' as SortType,
-      order: '' as OrderType};
+      order: '' as OrderType,
+      query: ''};
     expect(catalogData.reducer(state, {type: fetchPromoAction.fulfilled.type, payload: promo}))
       .toEqual({
         isCatalogDataLoaded: false,
@@ -76,7 +80,8 @@ describe('Reducer: catalogData', () => {
         types: [] as CamerasTypes[],
         levels: [] as CamerasLevel[],
         sort: '' as SortType,
-        order: '' as OrderType});
+        order: '' as OrderType,
+        query: ''});
   });
 
   it('should update current page by change page', () => {
@@ -91,7 +96,8 @@ describe('Reducer: catalogData', () => {
       types: [] as CamerasTypes[],
       levels: [] as CamerasLevel[],
       sort: '' as SortType,
-      order: '' as OrderType};
+      order: '' as OrderType,
+      query: ''};
     expect(catalogData.reducer(state, changeCurrentPage(3)))
       .toEqual({
         isCatalogDataLoaded: false,
@@ -104,6 +110,7 @@ describe('Reducer: catalogData', () => {
         types: [] as CamerasTypes[],
         levels: [] as CamerasLevel[],
         sort: '' as SortType,
-        order: '' as OrderType});
+        order: '' as OrderType,
+        query: ''});
   });
 });

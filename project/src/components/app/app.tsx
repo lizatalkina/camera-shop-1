@@ -27,6 +27,10 @@ function App(): JSX.Element {
         element = {<CatalogScreen/>}
       />
       <Route
+        path = { AppRoute.CatalogFilter }
+        element = {<CatalogScreen/>}
+      />
+      <Route
         path = { AppRoute.Product }
         element = {
           <ProductScreen/>

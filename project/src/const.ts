@@ -1,5 +1,6 @@
 export enum AppRoute {
   Catalog = '/',
+  CatalogFilter = '/?:query',
   CatalogPage = '/page-:id',
   Product = '/catalog/:id/:type',
   Basket = '/basket',

@@ -11,14 +11,37 @@ import { PAGE_SIZE } from '../../const';
 import { getCurrentPage, getPromo, getCameras } from '../../store/catalog-data/selectors';
 import { useAppDispatch } from '../../hooks';
 import { changeCurrentPage } from '../../store/catalog-data/catalog-data';
+import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { useEffect, useRef } from 'react';
+// import { fetchCamerasAction } from '../../store/api-actions';
 
 function CatalogScreen (): JSX.Element {
+  const didMountRef = useRef(false);
+  const [ searchParams ] = useSearchParams();
+  const inQueryString = searchParams.toString();
+  const currentQuery = useAppSelector((state) => state.CATALOG.query);
+  const isQueryStringChanged = inQueryString !== currentQuery;
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const cameras = useAppSelector(getCameras);
   const promo = useAppSelector(getPromo);
   const currentPage = useAppSelector(getCurrentPage);
   const pageCount = Math.ceil(cameras.length / PAGE_SIZE);
   const currentCameras = cameras.slice((currentPage - 1) * PAGE_SIZE, (currentPage - 1) * PAGE_SIZE + PAGE_SIZE);
+
+  useEffect(() => {
+    if (didMountRef.current && isQueryStringChanged) {
+      currentQuery === '' ? navigate(AppRoute.Catalog) : navigate(AppRoute.CatalogFilter.replace(':query', `${currentQuery}`));
+    }
+    didMountRef.current = true;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentQuery]);
+
+  // useEffect(() => {
+  //   dispatch(fetchCamerasAction(inQueryString));
+  // }, []);
 
   const handleChangeCurrentPage = (e: number) => {
     dispatch(changeCurrentPage(e));

@@ -26,7 +26,7 @@ describe('Async actions', () => {
       .reply(200, mockCameras);
 
     const store = mockStore();
-    await store.dispatch(fetchCamerasAction());
+    await store.dispatch(fetchCamerasAction(''));
 
     const actions = store.getActions().map(({type}) => type as string);
 

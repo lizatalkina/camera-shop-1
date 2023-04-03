@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import HistoryRouter from './components/history-router/history-router';
 import browserHistory from './browser-history';
 
-store.dispatch(fetchCamerasAction());
+store.dispatch(fetchCamerasAction(''));
 store.dispatch(fetchPromoAction());
 
 const root = ReactDOM.createRoot(

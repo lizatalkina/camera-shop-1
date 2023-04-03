@@ -9,13 +9,14 @@ export type CatalogData = {
   cameras: Camera[];
   promo: Promo;
   currentPage: number;
-  price: number;
-  priceUp: number;
+  price: number | null;
+  priceUp: number | null;
   category: Categories;
   types: CamerasTypes[];
   levels: CamerasLevel[];
   sort: SortType;
   order: OrderType;
+  query: string;
 };
 
 export type ProductData = {

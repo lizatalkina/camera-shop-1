@@ -6,14 +6,15 @@ import { Promo } from '../types/promo';
 import { Review } from '../types/review';
 import { APIRoute } from '../const';
 
-export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
+export const fetchCamerasAction = createAsyncThunk<Camera[], string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchCameras',
-  async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<Camera[]>(APIRoute.Cameras);
+  async (queryString, {dispatch, extra: api}) => {
+    const camerasRoute = queryString === '' ? APIRoute.Cameras : `${APIRoute.Cameras}?${queryString}`;
+    const {data} = await api.get<Camera[]>(`${camerasRoute}`);
     return data;
   },
 );
